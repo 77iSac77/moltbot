@@ -30,9 +30,6 @@ ENV CLAWDBOT_PREFER_PNPM=1
 RUN pnpm ui:install
 RUN pnpm ui:build
 
-# Install moltbot CLI globally as root before switching user
-RUN npm install -g .
-
 ENV NODE_ENV=production
 
 # Security hardening: Run as non-root user
@@ -40,6 +37,4 @@ ENV NODE_ENV=production
 # This reduces the attack surface by preventing container escape via root privileges
 USER node
 
-# Run moltbot gateway directly (already installed globally)
-CMD ["node", "--max-old-space-size=460", "/usr/local/bin/moltbot", "gateway"]
-
+CMD ["node", "dist/index.js"]
