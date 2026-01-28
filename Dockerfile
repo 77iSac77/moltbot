@@ -41,4 +41,5 @@ ENV NODE_ENV=production
 USER node
 
 # Run moltbot gateway directly (already installed globally)
-CMD ["moltbot", "gateway"]
+CMD ["node", "--max-old-space-size=460", "/usr/local/bin/moltbot", "gateway"]
+
