@@ -1,8 +1,10 @@
 {
-  "agent": {
-    "model": "openrouter/nvidia/nemotron-3-nano-30b-a3b:free",
-    "workspace": "/home/node/clawd",
-    "skipBootstrap": false
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/nvidia/nemotron-3-nano-30b-a3b:free"
+      }
+    }
   },
   "providers": {
     "openrouter": {
@@ -15,21 +17,6 @@
     "auth": {
       "mode": "token",
       "token": "${GATEWAY_TOKEN}"
-    }
-  },
-  "channels": {
-    "telegram": {
-      "enabled": false
-    },
-    "discord": {
-      "enabled": false
-    }
-  },
-  "tools": {
-    "web": {
-      "search": {
-        "enabled": false
-      }
     }
   }
 }
