@@ -6,17 +6,7 @@
       }
     }
   },
-  "providers": {
-    "openrouter": {
-      "apiKey": "${OPENROUTER_API_KEY}"
-    }
-  },
   "gateway": {
-    "bind": "0.0.0.0",
-    "port": 18789,
-    "auth": {
-      "mode": "token",
-      "token": "${GATEWAY_TOKEN}"
-    }
+    "port": 18789
   }
 }
