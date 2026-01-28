@@ -25,16 +25,29 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 RUN CLAWDBOT_A2UI_SKIP_MISSING=1 pnpm build
-# Force pnpm for UI build (Bun may fail on ARM/Synology architectures)
 ENV CLAWDBOT_PREFER_PNPM=1
 RUN pnpm ui:install
 RUN pnpm ui:build
 
 ENV NODE_ENV=production
 
-# Security hardening: Run as non-root user
-# The node:22-bookworm image includes a 'node' user (uid 1000)
-# This reduces the attack surface by preventing container escape via root privileges
+# Criar diretorios de config
+RUN mkdir -p /home/node/.clawdbot \
+    && mkdir -p /home/node/clawd/memory \
+    && mkdir -p /home/node/clawd/skills \
+    && chown -R node:node /home/node/.clawdbot \
+    && chown -R node:node /home/node/clawd
+
+# Copiar config
+COPY --chown=node:node docker-config/moltbot.json /home/node/.clawdbot/moltbot.json
+COPY --chown=node:node docker-config/workspace/ /home/node/clawd/
+
+ENV HOME=/home/node
+ENV CLAWDBOT_STATE_DIR=/home/node/.clawdbot
+ENV CLAWDBOT_CONFIG_PATH=/home/node/.clawdbot/moltbot.json
+
+EXPOSE 18789
+
 USER node
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "moltbot.mjs", "gateway", "--port", "18789", "--bind", "0.0.0.0"]
