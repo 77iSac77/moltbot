@@ -1,6 +1,6 @@
 {
   "agent": {
-    "model": "openrouter/anthropic/claude-sonnet-4",
+    "model": "openrouter/nvidia/nemotron-3-nano-30b-a3b:free",
     "workspace": "/home/node/clawd",
     "skipBootstrap": false
   },
